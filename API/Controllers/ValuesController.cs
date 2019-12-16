@@ -22,19 +22,14 @@ namespace API.Controllers
 
         // GET api/values
         [HttpGet]
-        //public ActionResult<IEnumerable<string>> Get()//v1
-        //public ActionResult<IEnumerable<Value>> Get()//v2
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
-            //return new string[] { "value1", "value2" };//v1
-            //var values = this._context.Values.ToList();//v2
             var values = await this._context.Values.ToListAsync();
             return Ok(values);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)//v1
         public async Task<ActionResult<string>> Get(int id)
         {
             //return "value";//v1
