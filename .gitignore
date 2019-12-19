@@ -6,6 +6,7 @@
 ## Custom
 appsettings.json
 *.db
+*.bak
 
 # User-specific files
 *.rsuser
