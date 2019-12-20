@@ -6,9 +6,10 @@ interface IProps {
     selectedActivity: IActivity;
     setEditMode: (editMode: boolean) => void;
     setSelectedActivy: (activity: IActivity | null) => void;
+    submitting: boolean;
 }
 
-const ActivityDetails: React.FC<IProps> = ({ selectedActivity, setEditMode, setSelectedActivy }) => {
+const ActivityDetails: React.FC<IProps> = ({ selectedActivity, setEditMode, setSelectedActivy, submitting }) => {
     return (
         <Card fluid>
             <Image src={`/assets/categoryImages/${selectedActivity.category}.jpg`} wrapped ui={false} />
