@@ -1,50 +1,28 @@
-﻿import React, { SyntheticEvent } from 'react';
-import { IActivity } from '../../../app/models/activity';
+﻿import React, { useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 import ActivityDetails from '../details/ActivityDetails';
 import ActivityList from './ActivityList';
 import ActivityForm from '../form/ActivityForm';
+import { observer } from 'mobx-react-lite';
+import ActivityStore from '../../../app/stores/activityStore';
 
-interface IProps {
-    activities: IActivity[];
-    selectActivity: (id: string) => void;//signature of the function that we are pasing down. Function returning void
-    selectedActivity: IActivity | null;
-    editMode: boolean;
-    setEditMode: (editMode: boolean) => void;
-    setSelectedActivy: (activity: IActivity | null) => void;
-    createActivity: (activity: IActivity) => void;
-    editActivity: (activity: IActivity) => void;
-    deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
-    submitting: boolean;
-    target: string;
-}
-
-const ActivityDashboard: React.FC<IProps> = ({ activities, selectActivity, selectedActivity, editMode, setEditMode, setSelectedActivy, createActivity, editActivity, deleteActivity, submitting, target }) => {
+const ActivityDashboard: React.FC = () => {
+    const activityStore = useContext(ActivityStore);
+    const { editMode, selectedActivity } = activityStore;
     return (
         <Grid>
             <Grid.Column width={10}>
-                <ActivityList activities={activities} selectActivity={selectActivity} deleteActivity={deleteActivity} submitting={submitting} target={target} />
+                <ActivityList />
             </Grid.Column>
             <Grid.Column width={6}>
                 {
                     selectedActivity &&
                     !editMode &&
-                    <ActivityDetails selectedActivity={selectedActivity!}
-                        setEditMode={setEditMode}
-                        setSelectedActivy={setSelectedActivy}
-                        submitting={submitting}
-                    /> /*! is overriding type safety*/
+                    <ActivityDetails />
                 }
                 {
-                    /* on create activity, the activity and props are setted to null but the component is not being updated because it has 
-                     * not unmounted and simply changing the prop is not causing the re-render of this component to give the uptaded state. To
-                     * solve this, we give our activity form a key and when it changes the component will reinitialize and will update the states with the new ones.
-                     */
                     editMode && <ActivityForm key={selectedActivity && selectedActivity?.id || 0}
-                        setEditMode={setEditMode} selectedActivity={selectedActivity!}
-                        createActivity={createActivity}
-                        editActivity={editActivity}
-                        submitting={submitting}
+                        activity={selectedActivity!}
                     />
                 }
             </Grid.Column>
@@ -52,4 +30,4 @@ const ActivityDashboard: React.FC<IProps> = ({ activities, selectActivity, selec
     );
 }
 
-export default ActivityDashboard;
+export default observer(ActivityDashboard);
