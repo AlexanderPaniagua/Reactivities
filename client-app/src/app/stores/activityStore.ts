@@ -48,6 +48,7 @@ class ActivityStore {
                 this.loadingInitial = false;
             });
             console.log(ex);
+            //throw ex;
         }
     };
 
@@ -68,6 +69,7 @@ class ActivityStore {
                 runInAction('Get activity error', () => {
                     this.loadingInitial = false;
                 });
+                //throw exception;
             }
         }
     };
