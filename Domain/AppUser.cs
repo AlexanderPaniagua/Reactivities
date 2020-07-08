@@ -8,5 +8,9 @@ namespace Domain
     public class AppUser: IdentityUser
     {
         public string DisplayName { get; set; }
+        //eager loading
+        //public ICollection<UserActivity> UserActivities { get; set; }
+        //lazy loading
+        public virtual ICollection<UserActivity> UserActivities { get; set; }
     }
 }
